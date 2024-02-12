@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bitcoin Analysis</title>
+    <title>Automated Crypto Trading</title>
     <link rel="stylesheet" href="venv/style.css">
+    <script src="script.js"></script>
 </head>
 <body>
     <div class="container">
@@ -23,7 +24,7 @@
                 <div class="indicators-actions">
                     <div class="indicator-list">
                         <div class="select-indicators">
-                            <select name="indicators" id="indicator">
+                            <select class="indicator" name="indicators" id="indicator1">
                                 <option selected disabled>Choose Indicators</option>
                                 <option value="RSI">RSI</option>
                                 <option value="MACD">MACD</option>
@@ -35,7 +36,7 @@
                         </div>
 
                         <div class="select-indicators">
-                            <select name="indicators" id="indicator">
+                            <select class="indicator" name="indicators" id="indicator2">
                                 <option selected disabled>Choose Indicators</option>
                                 <option value="RSI">RSI</option>
                                 <option value="MACD">MACD</option>
@@ -47,7 +48,7 @@
                         </div>
 
                         <div class="select-indicators">
-                            <select name="indicators" id="indicator">
+                            <select class="indicator" name="indicators" id="indicator3">
                                 <option selected disabled>Choose Indicators</option>
                                 <option value="RSI">RSI</option>
                                 <option value="MACD">MACD</option>
@@ -61,46 +62,81 @@
 
                     <div class="action-list">
                         <div class="select-indicators">
-                            <select name="indicators" id="indicator">
+                            <select class="indicator" name="indicators" id="indicator4">
                                 <option selected disabled>Choose Action</option>
-                                <option value="RSI">RSI</option>
-                                <option value="MACD">MACD</option>
-                                <option value="200MA">200MA</option>
-                                <option value="100MA">100MA</option>
-                                <option value="50MA">50MA</option>
-                                <option value="Bollinger Band">Bollinger Band</option>
+                                <!-- Options will be dynamically updated based on first selector -->
                             </select>
                         </div>
 
                         <div class="select-indicators">
-                            <select name="indicators" id="indicator">
+                            <select class="indicator" name="indicators" id="indicator5">
                                 <option selected disabled>Choose Action</option>
-                                <option value="RSI">RSI</option>
-                                <option value="MACD">MACD</option>
-                                <option value="200MA">200MA</option>
-                                <option value="100MA">100MA</option>
-                                <option value="50MA">50MA</option>
-                                <option value="Bollinger Band">Bollinger Band</option>
+                                <!-- Options will be dynamically updated based on first selector -->
                             </select>
                         </div>
 
                         <div class="select-indicators">
-                            <select name="indicators" id="indicator">
+                            <select class="indicator" name="indicators" id="indicator6">
                                 <option selected disabled>Choose Action</option>
-                                <option value="RSI">RSI</option>
-                                <option value="MACD">MACD</option>
-                                <option value="200MA">200MA</option>
-                                <option value="100MA">100MA</option>
-                                <option value="50MA">50MA</option>
-                                <option value="Bollinger Band">Bollinger Band</option>
+                                <!-- Options will be dynamically updated based on first selector -->
                             </select>
                         </div>
                     </div>
                 </div>
-                <div class="SLTP-section">
+            </div>
+            <div class="SLTP-section">
+                <div class="profit-section">
+                    <div class="profit">
+                        <h3>Profit (%)</h3>
 
+                        <input class="inputs" type="number" id="quantity" name="quantity" min="1" max="100">
+
+
+                        <input class="inputs" type="number" id="quantity" name="quantity" min="1" max="100">
+
+
+                        <input class="inputs" type="number" id="quantity" name="quantity" min="1" max="100">
+
+                    </div>
+
+                    <div class="sell">
+                        <h3>Sell (%)</h3>
+
+                        <input class="inputs" type="number" id="quantity" name="quantity" min="1" max="100">
+
+                        <input class="inputs" type="number" id="quantity" name="quantity" min="1" max="100">
+
+                        <input class="inputs" type="number" id="quantity" name="quantity" min="1" max="100">
+                    </div>
+                </div>
+
+                <div class="loss-section">
+                    <div class="sell">
+                        <h3>Loss (%)</h3>
+
+                        <input class="inputs" type="number" id="quantity" name="quantity" min="1" max="100">
+
+                        <input class="inputs" type="number" id="quantity" name="quantity" min="1" max="100">
+
+                        <input class="inputs" type="number" id="quantity" name="quantity" min="1" max="100">
+
+                    </div>
+                    <div class="sell">
+                        <h3>Buy (%)</h3>
+
+                        <input class="inputs" type="number" id="quantity" name="quantity" min="1" max="100">
+
+                        <input class="inputs" type="number" id="quantity" name="quantity" min="1" max="100">
+
+                        <input class="inputs" type="number" id="quantity" name="quantity" min="1" max="100">
+
+                    </div>
                 </div>
             </div>
+            <div class="order-button">
+                <button type="button">Place Order</button>
+            </div>
+
         </div>
 
         <div class="dataset-output">
