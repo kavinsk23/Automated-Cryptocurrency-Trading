@@ -4,17 +4,130 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Automated Crypto Trading</title>
-    <link rel="stylesheet" href="venv/style.css">
     <script src="script.js"></script>
+    <style>
+        .tradingview-widget-container{
+            width: 100% !important;
+            float: right;
+            height: 500px !important;
+        }
+
+        .main {
+            display: flex;
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            background-color: #0C3C4C;
+            padding: 10px;
+        }
+
+        .input-bar {
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+            padding-right: 20px;
+            align-items: center;
+            justify-items: center;
+        }
+
+        .coin-pair h3:nth-child(2), .inputs{
+            background-color: #7A7985;
+            border-radius: 50px;
+            padding: 10px 30px;
+        }
+
+        .Indicators-section {
+            border: 3px solid #000000;
+            padding: 10px;
+            margin-top: 10px;
+            width: fit-content;
+        }
+
+        .indicator-header, .SLTP-section h3{
+            display: flex;
+            justify-content: space-around;
+            color: #BCBABC;
+            font-size: 20px;
+            padding: 10px;
+        }
+
+        .indicator {
+            height: 50px;
+            border-radius: 50px;
+            padding: 10px;
+            margin: 10px;
+            font-size: 20px;
+            background-color: #7A7985;
+            color: #fff;
+        }
+
+        .indicators-actions {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .SLTP-section {
+            border: 3px solid #000000;
+            padding: 10px;
+            margin-top: 10px;
+            width: fit-content;
+        }
+
+        .profit-section, .loss-section {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .profit-section {
+            margin-bottom: 30px;
+        }
+
+        .profit, .sell {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .inputs {
+            margin: 10px;
+            border: none;
+            width: fit-content;
+        }
+
+        button {
+            height: 50px;
+            width: 150px;
+            border-radius: 50px;
+            font-size: 20px;
+            border: none;
+            background-color: #08152b;
+            color: #BCBABC;
+            cursor: pointer;
+        }
+
+        .order-button {
+            margin: 10px;
+            display: flex;
+            justify-content: center;
+            height: 50px;
+            width: 150px;
+            border-radius: 50px;
+            font-size: 20px;
+            border: none;
+            background-color: #08152b;
+            color: #BCBABC;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
+<div class="main">
+    <div class="input-bar">
         <div class="input-bar">
-            <div class="coin-pair">
-                <h3>Coin Pair</h3>
-                <h3>BTC/USD</h3>
-            </div>
-
             <div class="Indicators-section">
                 <div class="indicator-header">
                     <h3>Indicators</h3>
@@ -134,15 +247,120 @@
                 </div>
             </div>
             <div class="order-button">
-                <button type="button">Place Order</button>
+                <button id="place-order" type="button">Place Order</button>
             </div>
-
-        </div>
-
-        <div class="dataset-output">
-            <!-- Embed the plotly plot -->
-            <iframe src="plot.html" width="100%" height="1200px" frameborder="0"></iframe>
         </div>
     </div>
+    <div id="statusDiv"></div>
+
+
+    <div class="tradingview-widget-container">
+        <!-- TradingView Widget -->
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js">
+            {
+                "autosize": true,
+                "symbol": "BITSTAMP:BTCUSD",
+                "timezone": "Etc/UTC",
+                "theme": "dark",
+                "style": "1",
+                "locale": "en",
+                "enable_publishing": false,
+                "withdateranges": true,
+                "range": "1H",
+                "hide_side_toolbar": false,
+                "allow_symbol_change": true,
+                "details": true,
+                "hotlist": true,
+                "calendar": false,
+                "container_id": "tradingview_3ffe5"
+            }
+        </script>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Function to update action options based on the selected indicator
+        function updateActionOptions(indicatorSelectorId, actionSelectorId) {
+            const indicatorSelector = document.getElementById(indicatorSelectorId);
+            const actionSelector = document.getElementById(actionSelectorId);
+
+            indicatorSelector.addEventListener('change', function() {
+                // Update action options based on indicator selection
+                updateActionSelectorOptions(this.value, actionSelector);
+
+                // Update disable state for options in other indicator selectors
+                updateDisableStateForIndicatorOptions();
+            });
+        }
+
+        function updateActionSelectorOptions(indicatorValue, actionSelector) {
+            // Clear existing options in action selector
+            actionSelector.innerHTML = '<option selected disabled>Choose Action</option>';
+
+            // Define actions based on selected indicator
+            let options = [];
+            switch (indicatorValue) {
+                case 'RSI':
+                    options = ['Above 70', 'Below 30'];
+                    break;
+                case 'MACD':
+                    options = ['Above 0', 'Below 0', 'Cross above', 'Cross below'];
+                    break;
+                case '200MA':
+                    options = ['Above Price', 'Below Price', 'Golden Cross', 'Death Cross'];
+                    break;
+                case '100MA':
+                    options = ['Above Price', 'Below Price'];
+                    break;
+                case '50MA':
+                    options = ['Golden Cross', 'Death Cross'];
+                    break;
+                case 'Bollinger Band':
+                    options = ['Reach Top', 'Reach Bottom'];
+                    break;
+            }
+
+            // Populate action selector with new options
+            options.forEach(function(option) {
+                const opt = document.createElement('option');
+                opt.value = option;
+                opt.textContent = option;
+                actionSelector.appendChild(opt);
+            });
+        }
+
+        function updateDisableStateForIndicatorOptions() {
+            // Get current selections
+            const selectedOptions = [
+                document.getElementById('indicator1').value,
+                document.getElementById('indicator2').value,
+                document.getElementById('indicator3').value
+            ];
+
+            // Iterate over all indicator selectors to update option disable state
+            ['indicator1', 'indicator2', 'indicator3'].forEach(selectorId => {
+                const selector = document.getElementById(selectorId);
+                Array.from(selector.options).forEach(option => {
+                    // Disable option if it's selected in any other selector
+                    option.disabled = selectedOptions.includes(option.value) && option.value !== selector.value;
+                });
+            });
+        }
+
+        // Initialize action options update mechanism and disable logic
+        updateActionOptions('indicator1', 'indicator4');
+        updateActionOptions('indicator2', 'indicator5');
+        updateActionOptions('indicator3', 'indicator6');
+
+        // Initial call to set correct disable state upon page load
+        updateDisableStateForIndicatorOptions();
+
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Your JavaScript functions and event listeners
+    });
+</script>
 </body>
 </html>
