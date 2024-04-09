@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
             case 'RSI': options = ['Above 70', 'Below 30']; break;
             case 'MACD': options = ['Above 0', 'Below 0', 'Cross above', 'Cross below']; break;
             case '200MA': options = ['Above Price', 'Below Price', 'Golden Cross', 'Death Cross']; break;
-            case '100MA': options = ['Above Price', 'Below Price']; break;
+            case '100MA': options = ['Above Price', 'Below Price', '5% Above Line', '5% Below Line']; break;
             case '50MA': options = ['Above Price', 'Below Price']; break;
             case 'Bollinger Band': options = ['Reach Top', 'Reach Bottom']; break;
             // Additional indicators and their actions can be added here
