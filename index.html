@@ -122,6 +122,26 @@
             color: #BCBABC;
             cursor: pointer;
         }
+
+        .chart-order {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .order-placed {
+            background-color: #BCBABC;
+            padding: 20px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .order-details h1 {
+            color: #08152b;
+            padding-bottom: 15px;
+        }
+
     </style>
 </head>
 <body>
@@ -253,28 +273,41 @@
     </div>
     <div id="statusDiv"></div>
 
-
-    <div class="tradingview-widget-container">
-        <!-- TradingView Widget -->
-        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js">
-            {
-                "autosize": true,
-                "symbol": "BITSTAMP:BTCUSD",
-                "timezone": "Etc/UTC",
-                "theme": "dark",
-                "style": "1",
-                "locale": "en",
-                "enable_publishing": false,
-                "withdateranges": true,
-                "range": "1H",
-                "hide_side_toolbar": false,
-                "allow_symbol_change": true,
-                "details": true,
-                "hotlist": true,
-                "calendar": false,
-                "container_id": "tradingview_3ffe5"
-            }
-        </script>
+    <div class="chart-order">
+        <div class="tradingview-widget-container">
+            <!-- TradingView Widget -->
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js">
+                {
+                    "autosize": true,
+                    "symbol": "BITSTAMP:BTCUSD",
+                    "timezone": "Etc/UTC",
+                    "theme": "dark",
+                    "style": "1",
+                    "locale": "en",
+                    "enable_publishing": false,
+                    "withdateranges": true,
+                    "range": "1H",
+                    "hide_side_toolbar": false,
+                    "allow_symbol_change": true,
+                    "details": true,
+                    "hotlist": true,
+                    "calendar": false,
+                    "container_id": "tradingview_3ffe5"
+                }
+            </script>
+        </div>
+        <div class="order-placed">
+            <div class="order-details">
+                <h1>✅Your order placed✅</h1>
+                <h2>At : Price</h2>
+                <h2>RSI : Value</h2>
+                <h2>MACD : Value</h2>
+                <h2>Bollinger : Value</h2>
+            </div>
+            <div>
+                <h1>PNL:_____</h1>
+            </div>
+        </div>
     </div>
 </div>
 
