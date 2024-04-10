@@ -142,6 +142,10 @@
             padding-bottom: 15px;
         }
 
+        #order-area {
+            display: none;
+        }
+
     </style>
 </head>
 <body>
@@ -296,19 +300,23 @@
                 }
             </script>
         </div>
-        <div class="order-placed">
+        <div class="order-placed" id="order-area">
             <div class="order-details">
                 <h1>✅Your order placed✅</h1>
-                <h2>At : Price</h2>
-                <h2>RSI : Value</h2>
-                <h2>MACD : Value</h2>
-                <h2>Bollinger : Value</h2>
-            </div>
-            <div>
-                <h1>PNL:_____</h1>
+                <h2 id="orderPrice">At : </h2>
+                <h2 id="orderRSI">RSI : </h2>
+                <!-- <h2 id="orderMACD">MACD : Value</h2> -->
+                 <h2 id="orderBollinger">Bollinger : </h2>
+                <h2 id="100ma">100MA: </h2>
+                <h2 id="orderPNL">Date: </h2>
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById("place-order").addEventListener("click", function() {
+            document.getElementById("order-area").style.display = "block"; // Show the div
+        });
+    </script>
 </div>
 </body>
 </html>
